@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	export let LabelText = 'Missing Label';
 </script>
 
