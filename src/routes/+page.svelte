@@ -1,2 +1,12 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import LabeledDate from '../components/LabeledDate.svelte';
+	import LabeledInput from '../components/LabeledInput.svelte';
+</script>
+
+<LabeledInput LabelText="Osoba" />
+<button>Dodaj</button>
+<LabeledInput LabelText="Godziny pracy" />
+<button>Dodaj</button>
+<LabeledDate LabelText="data OD" />
+<LabeledDate LabelText="data DO" />
+<button>Generuj</button>
