@@ -1,7 +1,11 @@
-<script>
-	export let LabelText = 'Missing Label';
-	export let InputBinding = '';
+<script lang="ts">
+	export let LabelText: string = 'Missing Label';
+	export let InputBinding: string = '';
+	export let callBackFn: () => void;
 </script>
 
-<label for="">{LabelText}</label>
-<input type="text" bind:value={InputBinding} />
+<form action="">
+	<label for="">{LabelText}</label>
+	<input type="text" bind:value={InputBinding} />
+	<button on:click={() => callBackFn()}>Dodaj</button>
+</form>
