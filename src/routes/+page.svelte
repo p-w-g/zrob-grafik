@@ -37,7 +37,9 @@
 				{#each $people as person}
 					<li>
 						{person}
-						<button data-test-id="remove_this" on:click={() => removePerson(person)}>usun</button>
+						<button data-test-id={`remove_this-${person}`} on:click={() => removePerson(person)}
+							>usun</button
+						>
 					</li>
 				{/each}
 			</ul>
