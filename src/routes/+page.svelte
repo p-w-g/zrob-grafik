@@ -3,8 +3,6 @@
 	import LabeledInput from '../components/LabeledInput.svelte';
 
 	import { people } from '../store';
-	let all_the_people: string[] = [];
-	people.subscribe((val) => (all_the_people = val));
 
 	const addPerson = (person: string) => {
 		people.update((prev) => (prev = [...prev, person]));
@@ -25,7 +23,7 @@
 	<div class="grid-list">
 		<h1>Osoby</h1>
 		<ul>
-			{#each all_the_people as person}
+			{#each $people as person}
 				<li>{person}</li>
 			{/each}
 		</ul>
