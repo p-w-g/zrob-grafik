@@ -10,6 +10,10 @@
 		people.update((prev) => (prev = [...prev, person]));
 		person = '';
 	};
+
+	const removePerson = (person: string) => {
+		people.update((prev) => prev.filter((p) => p !== person));
+	};
 </script>
 
 <div class="grid-container">
@@ -31,7 +35,10 @@
 			<h3>Osoby</h3>
 			<ul>
 				{#each $people as person}
-					<li>{person}</li>
+					<li>
+						{person}
+						<button data-test-id="remove_this" on:click={() => removePerson(person)}>usun</button>
+					</li>
 				{/each}
 			</ul>
 		{/if}
