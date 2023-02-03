@@ -14,10 +14,8 @@
 
 <div class="grid-container">
 	<div class="grid-admin_panel">
-		<LabeledInput LabelText="Osoba" bind:InputBinding={person} />
-		<button on:click={() => addPerson()}>Dodaj</button>
-		<LabeledInput LabelText="Godziny pracy" />
-		<button>Dodaj</button>
+		<LabeledInput LabelText="Osoba" bind:InputBinding={person} callBackFn={() => addPerson()} />
+		<LabeledInput LabelText="Godziny pracy" callBackFn={() => alert('TODO')} />
 		<LabeledDate LabelText="data OD" />
 		<LabeledDate LabelText="data DO" />
 		<button>Generuj</button>
