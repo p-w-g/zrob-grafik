@@ -24,12 +24,14 @@
 	</div>
 	<div class="grid-sheet" />
 	<div class="grid-list">
-		<h1>Osoby</h1>
-		<ul>
-			{#each $people as person}
-				<li>{person}</li>
-			{/each}
-		</ul>
+		{#if $people.length}
+			<h1>Osoby</h1>
+			<ul>
+				{#each $people as person}
+					<li>{person}</li>
+				{/each}
+			</ul>
+		{/if}
 	</div>
 	<div class="grid-sheet_actions" />
 </div>
