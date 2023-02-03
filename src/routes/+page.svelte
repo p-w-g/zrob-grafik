@@ -2,17 +2,20 @@
 	import LabeledDate from '../components/LabeledDate.svelte';
 	import LabeledInput from '../components/LabeledInput.svelte';
 
+	$: person = '';
+
 	import { people } from '../store';
 
-	const addPerson = (person: string) => {
+	const addPerson = () => {
 		people.update((prev) => (prev = [...prev, person]));
+		person = '';
 	};
 </script>
 
 <div class="grid-container">
 	<div class="grid-admin_panel">
-		<LabeledInput LabelText="Osoba" />
-		<button on:click={() => addPerson('something')}>Dodaj</button>
+		<LabeledInput LabelText="Osoba" bind:InputBinding={person} />
+		<button on:click={() => addPerson()}>Dodaj</button>
 		<LabeledInput LabelText="Godziny pracy" />
 		<button>Dodaj</button>
 		<LabeledDate LabelText="data OD" />
