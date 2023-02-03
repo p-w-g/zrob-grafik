@@ -14,7 +14,12 @@
 
 <div class="grid-container">
 	<div class="grid-admin_panel">
-		<LabeledInput LabelText="Osoba" bind:InputBinding={person} callBackFn={() => addPerson()} />
+		<LabeledInput
+			LabelText="Osoba"
+			bind:InputBinding={person}
+			callBackFn={() => addPerson()}
+			testId="add_person"
+		/>
 		<LabeledInput LabelText="Godziny pracy" callBackFn={() => alert('TODO')} />
 		<LabeledDate LabelText="data OD" />
 		<LabeledDate LabelText="data DO" />
@@ -23,7 +28,7 @@
 	<div class="grid-sheet" />
 	<div class="grid-list">
 		{#if $people.length}
-			<h1>Osoby</h1>
+			<h3>Osoby</h3>
 			<ul>
 				{#each $people as person}
 					<li>{person}</li>
