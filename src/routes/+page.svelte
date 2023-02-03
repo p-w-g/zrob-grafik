@@ -14,6 +14,10 @@
 	const removePerson = (person: string) => {
 		people.update((prev) => prev.filter((p) => p !== person));
 	};
+
+	const removeAll = () => {
+		$people = [];
+	};
 </script>
 
 <div class="grid-container">
@@ -43,6 +47,7 @@
 					</li>
 				{/each}
 			</ul>
+			<button data-test-id="remove-all" on:click={() => removeAll()}>usun wszystkich</button>
 		{/if}
 	</div>
 	<div class="grid-sheet_actions" />
