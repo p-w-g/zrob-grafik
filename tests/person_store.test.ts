@@ -52,3 +52,18 @@ test('remove people from list', async ({ page }) => {
 	await expect(page.getByRole('listitem')).toHaveCount(2);
 	await expect(page.getByRole('listitem')).toHaveText(['Zbychu usun', 'Tomas usun']);
 });
+
+test('nuke the list', async ({ page }) => {
+	const the_group = ['Komatsu', 'Rog', 'Jocke', 'Zbychu', 'Tomas'];
+
+	await page.goto('/');
+
+	for (let index = 0; index < the_group.length; index++) {
+		const element = the_group[index];
+		await page.getByTestId('add_person').fill(element);
+		await page.getByTestId('add_person-button').click();
+	}
+
+	await page.getByTestId('remove-all').click();
+	await expect(page.getByRole('listitem')).toHaveCount(0);
+});
