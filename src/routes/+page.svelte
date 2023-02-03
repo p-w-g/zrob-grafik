@@ -23,6 +23,7 @@
 		box-sizing: border-box;
 		background-color: #e1e1e1;
 	}
+
 	.grid-container {
 		display: grid;
 		grid-template-columns: repeat(5, 1fr);
@@ -37,12 +38,15 @@
 		justify-self: center;
 		align-self: center;
 	}
+
 	.grid-sheet {
 		grid-area: 2 / 1 / 10 / 5;
 	}
+
 	.grid-list {
 		grid-area: 2 / 5 / 10 / 6;
 	}
+
 	.grid-sheet_actions {
 		grid-area: 10 / 1 / 11 / 6;
 	}
