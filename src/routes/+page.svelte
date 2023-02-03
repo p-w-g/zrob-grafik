@@ -1,12 +1,18 @@
-<script>
+<script lang="ts">
 	import LabeledDate from '../components/LabeledDate.svelte';
 	import LabeledInput from '../components/LabeledInput.svelte';
+
+	import { people } from '../store';
+
+	const addPerson = (person: string) => {
+		console.log(person);
+	};
 </script>
 
 <div class="grid-container">
 	<div class="grid-admin_panel">
 		<LabeledInput LabelText="Osoba" />
-		<button>Dodaj</button>
+		<button on:click={() => addPerson('something')}>Dodaj</button>
 		<LabeledInput LabelText="Godziny pracy" />
 		<button>Dodaj</button>
 		<LabeledDate LabelText="data OD" />
