@@ -3,9 +3,11 @@
 	import LabeledInput from '../components/LabeledInput.svelte';
 
 	import { people } from '../store';
+	let all_the_people: string[] = [];
+	people.subscribe((val) => (all_the_people = val));
 
 	const addPerson = (person: string) => {
-		console.log(person);
+		people.update((prev) => (prev = [...prev, person]));
 	};
 </script>
 
@@ -20,7 +22,14 @@
 		<button>Generuj</button>
 	</div>
 	<div class="grid-sheet" />
-	<div class="grid-list" />
+	<div class="grid-list">
+		<h1>Osoby</h1>
+		<ul>
+			{#each all_the_people as person}
+				<li>{person}</li>
+			{/each}
+		</ul>
+	</div>
 	<div class="grid-sheet_actions" />
 </div>
 
