@@ -3,8 +3,18 @@
 	import LabeledInput from '../components/LabeledInput.svelte';
 
 	$: person = '';
+	$: date_from = new Date();
+	$: date_to = new Date();
+	$: days = 0;
 
-	import { people } from '../store';
+	import {
+		people,
+		month,
+		date_from_timestamp,
+		date_to_timestamp,
+		days_in_period,
+		nation_wide_days_off
+	} from '../store';
 
 	const addPerson = () => {
 		people.update((prev) => (prev = [...prev, person]));
@@ -18,6 +28,11 @@
 	const removeAll = () => {
 		$people = [];
 	};
+
+	const createShiftPeriod = () => {
+		$date_from_timestamp = date_from;
+		$date_to_timestamp = date_to;
+	};
 </script>
 
 <div class="grid-container">
@@ -29,11 +44,15 @@
 			testId="add_person"
 		/>
 		<LabeledInput LabelText="Godziny pracy" callBackFn={() => alert('TODO')} />
-		<LabeledDate LabelText="data OD" />
-		<LabeledDate LabelText="data DO" />
-		<button>Generuj</button>
+		<LabeledDate LabelText="data OD" bind:InputBinding={date_from} />
+		<LabeledDate LabelText="data DO" bind:InputBinding={date_to} />
+		<button on:click={() => createShiftPeriod()}>Generuj</button>
 	</div>
-	<div class="grid-sheet" />
+	<div class="grid-sheet">
+		{#if !!$date_from_timestamp && !!$date_to_timestamp}
+			<h3>Grafik na okres {$date_from_timestamp} - {$date_to_timestamp}</h3>
+		{/if}
+	</div>
 	<div class="grid-list">
 		{#if $people.length}
 			<h3>Osoby</h3>
