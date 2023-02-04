@@ -64,9 +64,10 @@
 					</tr>
 				</thead>
 				<tbody>
+					<th>Dzien miesiaca</th>
 					{#each { length: $days_in_period } as _, i}
 						<tr>
-							<td>{i + 1}</td>
+							<td>{new Date(date_from).getDate() + i}</td>
 						</tr>
 					{/each}
 				</tbody>
