@@ -50,8 +50,27 @@
 	</div>
 	<div class="grid-sheet">
 		{#if !!$date_from_timestamp && !!$date_to_timestamp}
-			<h3>Grafik na okres {$date_from_timestamp} - {$date_to_timestamp}</h3>
-			<p>Ilosc dni kalendarzowych: {$days_in_period}</p>
+			<table>
+				<thead>
+					<tr>
+						<th>
+							Grafik na okres {$date_from_timestamp} - {$date_to_timestamp}
+						</th>
+					</tr>
+					<tr>
+						<td>
+							Ilosc dni kalendarzowych: {$days_in_period}
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					{#each { length: $days_in_period } as _, i}
+						<tr>
+							<td>{i + 1}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
 		{/if}
 	</div>
 	<div class="grid-list">
