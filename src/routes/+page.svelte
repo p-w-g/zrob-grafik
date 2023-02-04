@@ -5,7 +5,6 @@
 	$: person = '';
 	$: date_from = new Date();
 	$: date_to = new Date();
-	$: days = 0;
 
 	import {
 		people,
@@ -32,6 +31,7 @@
 	const createShiftPeriod = () => {
 		$date_from_timestamp = date_from;
 		$date_to_timestamp = date_to;
+		$days_in_period = new Date(date_to).getDate() - new Date(date_from).getDate() + 1;
 	};
 </script>
 
@@ -51,6 +51,7 @@
 	<div class="grid-sheet">
 		{#if !!$date_from_timestamp && !!$date_to_timestamp}
 			<h3>Grafik na okres {$date_from_timestamp} - {$date_to_timestamp}</h3>
+			<p>Ilosc dni kalendarzowych: {$days_in_period}</p>
 		{/if}
 	</div>
 	<div class="grid-list">
