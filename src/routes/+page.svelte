@@ -41,6 +41,8 @@
 	};
 
 	const createPeriod = () => {
+		$month = [];
+
 		$date_from_timestamp = date_from;
 		$date_to_timestamp = date_to;
 		const DD_TO = new Date(date_to).getDate();
@@ -100,9 +102,17 @@
 				</thead>
 				<tbody>
 					<th>Dzien miesiaca</th>
+
+					{#each $shifts as shift}
+						<th>{shift}</th>
+					{/each}
+					<th />
 					{#each $month as date}
 						<tr class:day-off={!!date.isDayOff}>
 							<td>{date.day}</td>
+							{#each $shifts as shift}
+								<td class:day-off={!!date.isDayOff}>pracownik</td>
+							{/each}
 						</tr>
 					{/each}
 				</tbody>
