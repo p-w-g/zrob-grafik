@@ -2,6 +2,8 @@ import { writable } from 'svelte/store';
 
 export const people = writable<string[]>([]);
 
+export const shifts = writable<string[]>([]);
+
 export const month = writable([{}]);
 export const date_from_timestamp = writable();
 export const date_to_timestamp = writable();
