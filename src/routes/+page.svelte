@@ -3,11 +3,13 @@
 	import LabeledInput from '../components/LabeledInput.svelte';
 
 	$: person = '';
+	$: shift = '';
 	$: date_from = new Date();
 	$: date_to = new Date();
 
 	import {
 		people,
+		shifts,
 		month,
 		date_from_timestamp,
 		date_to_timestamp,
@@ -28,7 +30,16 @@
 		$people = [];
 	};
 
-	const createShiftPeriod = () => {
+	const createShift = (newShift: string) => {
+		shifts.update((state) => (state = [...state, newShift]));
+		shift = '';
+	};
+
+	const removeShift = (shift: string) => {
+		shifts.update((state) => state.filter((s) => s !== shift));
+	};
+
+	const createPeriod = () => {
 		$date_from_timestamp = date_from;
 		$date_to_timestamp = date_to;
 		$days_in_period = new Date(date_to).getDate() - new Date(date_from).getDate() + 1;
@@ -43,10 +54,15 @@
 			callBackFn={() => addPerson()}
 			testId="add_person"
 		/>
-		<LabeledInput LabelText="Godziny pracy" callBackFn={() => alert('TODO')} />
+		<LabeledInput
+			LabelText="Godziny pracy"
+			callBackFn={() => createShift(shift)}
+			bind:InputBinding={shift}
+			testId="add_shift"
+		/>
 		<LabeledDate LabelText="data OD" bind:InputBinding={date_from} />
 		<LabeledDate LabelText="data DO" bind:InputBinding={date_to} />
-		<button on:click={() => createShiftPeriod()}>Generuj</button>
+		<button on:click={() => createPeriod()}>Generuj</button>
 	</div>
 	<div class="grid-sheet">
 		{#if !!$date_from_timestamp && !!$date_to_timestamp}
@@ -75,6 +91,18 @@
 		{/if}
 	</div>
 	<div class="grid-list">
+		{#if $shifts.length}
+			<h3>Zmiany</h3>
+			<ul>
+				{#each $shifts as shift}
+					<li>
+						{shift}
+						<button data-test-id={`remove_this-${shift}`} on:click={() => removeShift(shift)}
+							>usun</button
+						>
+					</li>{/each}
+			</ul>
+		{/if}
 		{#if $people.length}
 			<h3>Osoby</h3>
 			<ul>
