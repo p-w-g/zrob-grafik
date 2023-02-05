@@ -1,6 +1,7 @@
 <script lang="ts">
 	import LabeledDate from '../components/LabeledDate.svelte';
 	import LabeledInput from '../components/LabeledInput.svelte';
+	import type { workday } from '../typings';
 
 	$: person = '';
 	$: shift = '';
@@ -42,7 +43,25 @@
 	const createPeriod = () => {
 		$date_from_timestamp = date_from;
 		$date_to_timestamp = date_to;
-		$days_in_period = new Date(date_to).getDate() - new Date(date_from).getDate() + 1;
+		const DD_TO = new Date(date_to).getDate();
+		const MM_human_indexed = new Date(date_from).getMonth() + 1;
+		const YY = new Date(date_from).getFullYear();
+		const DD_FROM = new Date(date_from).getDate();
+
+		$days_in_period = DD_TO - DD_FROM + 1;
+		let workdays: workday[] = [];
+		for (let index = 0; index < $days_in_period; index++) {
+			const DD_Indexed = DD_FROM + index;
+			const current_day = (DD_FROM + index).toString();
+			const is_sunday = new Date(`${YY}, ${MM_human_indexed}, ${DD_Indexed}`).getDay() === 0;
+			const day: workday = {
+				day: current_day,
+				shifts: $shifts,
+				isDayOff: is_sunday
+			};
+			workdays.push(day);
+		}
+		month.update((state) => (state = [...state, ...workdays]));
 	};
 </script>
 
@@ -65,7 +84,7 @@
 		<button on:click={() => createPeriod()}>Generuj</button>
 	</div>
 	<div class="grid-sheet">
-		{#if !!$date_from_timestamp && !!$date_to_timestamp}
+		{#if !!$date_from_timestamp && !!$date_to_timestamp && $month.length}
 			<table>
 				<thead>
 					<tr>
@@ -81,9 +100,9 @@
 				</thead>
 				<tbody>
 					<th>Dzien miesiaca</th>
-					{#each { length: $days_in_period } as _, i}
-						<tr>
-							<td>{new Date(date_from).getDate() + i}</td>
+					{#each $month as date}
+						<tr class:day-off={!!date.isDayOff}>
+							<td>{date.day}</td>
 						</tr>
 					{/each}
 				</tbody>
@@ -152,5 +171,9 @@
 
 	.grid-sheet_actions {
 		grid-area: 10 / 1 / 11 / 6;
+	}
+
+	.day-off {
+		background-color: #ff2c55;
 	}
 </style>
