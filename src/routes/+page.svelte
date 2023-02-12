@@ -1,7 +1,7 @@
 <script lang="ts">
 	import LabeledDate from '../components/LabeledDate.svelte';
 	import LabeledInput from '../components/LabeledInput.svelte';
-	import type { workday } from '../typings';
+	import type { workday, Ishift } from '../typings';
 
 	$: person = '';
 	$: shift = '';
@@ -31,13 +31,13 @@
 		$people = [];
 	};
 
-	const createShift = (newShift: string) => {
+	const createShift = (newShift: Ishift) => {
 		shifts.update((state) => (state = [...state, newShift]));
 		shift = '';
 	};
 
 	const removeShift = (shift: string) => {
-		shifts.update((state) => state.filter((s) => s !== shift));
+		shifts.update((state) => state.filter((s) => s[shift]));
 	};
 
 	const createPeriod = () => {
@@ -77,7 +77,7 @@
 		/>
 		<LabeledInput
 			LabelText="Godziny pracy"
-			callBackFn={() => createShift(shift)}
+			callBackFn={() => createShift({[shift]: ''})}
 			bind:InputBinding={shift}
 			testId="add_shift"
 		/>
@@ -104,14 +104,14 @@
 					<th>Dzien miesiaca</th>
 
 					{#each $shifts as shift}
-						<th>{shift}</th>
+						<th>{Object.keys(shift)}</th>
 					{/each}
 					<th />
 					{#each $month as date}
 						<tr class:day-off={!!date.isDayOff}>
 							<td>{date.day}</td>
 							{#each $shifts as shift}
-								<td class:day-off={!!date.isDayOff}>pracownik</td>
+								<td class:day-off={!!date.isDayOff}>"todo"</td>
 							{/each}
 						</tr>
 					{/each}
@@ -125,8 +125,8 @@
 			<ul>
 				{#each $shifts as shift}
 					<li>
-						{shift}
-						<button data-test-id={`remove_this-${shift}`} on:click={() => removeShift(shift)}
+						{Object.keys(shift)}
+						<button data-test-id={`remove_this-${shift}`} on:click={() => removeShift("TODO")}
 							>usun</button
 						>
 					</li>{/each}
