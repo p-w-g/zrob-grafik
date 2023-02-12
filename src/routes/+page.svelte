@@ -38,7 +38,7 @@
 
 	const removeShift = (shift: string) => {
 		const shift_parsed = Object.keys(shift)[0];
-		shifts.update((state) => state.filter((s) => s[shift_parsed]));
+		shifts.update((state) => state.filter((s) => Object.keys(s)[0] !== shift_parsed));
 	};
 
 	const createPeriod = () => {
