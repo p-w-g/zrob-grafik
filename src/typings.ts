@@ -1,5 +1,9 @@
 export interface workday {
 	day?: string;
-	shifts?: string[];
+	shifts?: shift[];
 	isDayOff?: boolean;
+}
+
+export interface shift {
+	[key: string]: string;
 }
