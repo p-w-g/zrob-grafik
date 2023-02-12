@@ -37,7 +37,8 @@
 	};
 
 	const removeShift = (shift: string) => {
-		shifts.update((state) => state.filter((s) => s[shift]));
+		const shift_parsed = Object.keys(shift)[0];
+		shifts.update((state) => state.filter((s) => s[shift_parsed]));
 	};
 
 	const createPeriod = () => {
@@ -77,7 +78,7 @@
 		/>
 		<LabeledInput
 			LabelText="Godziny pracy"
-			callBackFn={() => createShift({[shift]: ''})}
+			callBackFn={() => createShift({ [shift]: '' })}
 			bind:InputBinding={shift}
 			testId="add_shift"
 		/>
@@ -126,7 +127,7 @@
 				{#each $shifts as shift}
 					<li>
 						{Object.keys(shift)}
-						<button data-test-id={`remove_this-${shift}`} on:click={() => removeShift("TODO")}
+						<button data-test-id={`remove_this-${shift}`} on:click={() => removeShift(shift)}
 							>usun</button
 						>
 					</li>{/each}
