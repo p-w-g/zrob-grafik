@@ -82,9 +82,9 @@
 			bind:InputBinding={shift}
 			testId="add_shift"
 		/>
-		<LabeledDate LabelText="data OD" bind:InputBinding={date_from} />
-		<LabeledDate LabelText="data DO" bind:InputBinding={date_to} />
-		<button on:click={() => createPeriod()}>Generuj</button>
+		<LabeledDate LabelText="data OD" bind:InputBinding={date_from} testId="select-date-from" />
+		<LabeledDate LabelText="data DO" bind:InputBinding={date_to} testId="select-date-to" />
+		<button data-test-id="dates-letsgo" on:click={() => createPeriod()}>Generuj</button>
 	</div>
 	<div class="grid-sheet">
 		{#if !!$date_from_timestamp && !!$date_to_timestamp && $month.length}
