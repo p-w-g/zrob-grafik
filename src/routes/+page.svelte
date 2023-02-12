@@ -36,7 +36,7 @@
 		shift = '';
 	};
 
-	const removeShift = (shift: string) => {
+	const removeShift = (shift: Ishift) => {
 		const shift_parsed = Object.keys(shift)[0];
 		shifts.update((state) => state.filter((s) => Object.keys(s)[0] !== shift_parsed));
 	};
