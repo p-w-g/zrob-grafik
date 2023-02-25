@@ -3,7 +3,11 @@ import { expect, test } from '@playwright/test';
 test('render correct number of days', async ({ page }) => {
 	await page.goto('/');
 
-	// select one month, select another month for feb it should be 28 days unless leap year
+	await page.getByTestId('select-date-from').fill('2023-02-13');
+	await page.getByTestId('select-date-to').fill('2023-02-27');
+	await page.getByTestId('dates-letsgo').click();
+
+	await expect(page.getByRole('cell')).toHaveCount(19);
 });
 
 test('render correct day labels in schedule', async ({ page }) => {
