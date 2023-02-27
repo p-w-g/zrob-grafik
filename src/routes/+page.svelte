@@ -41,10 +41,13 @@
 	};
 
 	const assignShiftSeries = (shift: string, employee: string) => {
-		// TODO
-		// drop assignement into the "month" state
-		// const new_assignement = { shift: employee };
-		// soo.. month.shifts => all shiefts that match the [shift], and assign employee
+		let temp = $month;
+
+		temp.forEach((workday) => {
+			!!workday.shifts && (workday.shifts[shift] = employee);
+		});
+
+		month.update((s) => (s = temp));
 	};
 
 	const createPeriod = () => {
