@@ -31,14 +31,20 @@
 		$people = [];
 	};
 
-	const createShift = (newShift: Ishift) => {
+	const createShift = (newShift: string) => {
 		shifts.update((state) => (state = [...state, newShift]));
 		shift = '';
 	};
 
-	const removeShift = (shift: Ishift) => {
-		const shift_parsed = Object.keys(shift)[0];
-		shifts.update((state) => state.filter((s) => Object.keys(s)[0] !== shift_parsed));
+	const removeShift = (shift: string) => {
+		shifts.update((state) => state.filter((s) => s !== shift));
+	};
+
+	const assignShiftSeries = (shift: string, employee: string) => {
+		// TODO
+		// drop assignement into the "month" state
+		// const new_assignement = { shift: employee };
+		// soo.. month.shifts => all shiefts that match the [shift], and assign employee
 	};
 
 	const createPeriod = () => {
@@ -57,9 +63,10 @@
 			const DD_Indexed = DD_FROM + index;
 			const current_day = (DD_FROM + index).toString();
 			const is_sunday = new Date(`${YY}, ${MM_human_indexed}, ${DD_Indexed}`).getDay() === 0;
+			const shifts_mapped = Object.fromEntries($shifts.map((s) => [s, '']));
 			const day: workday = {
 				day: current_day,
-				shifts: $shifts,
+				shifts: shifts_mapped,
 				isDayOff: is_sunday
 			};
 			workdays.push(day);
@@ -78,7 +85,7 @@
 		/>
 		<LabeledInput
 			LabelText="Godziny pracy"
-			callBackFn={() => createShift({ [shift]: '' })}
+			callBackFn={() => createShift(shift)}
 			bind:InputBinding={shift}
 			testId="add_shift"
 		/>
@@ -105,14 +112,18 @@
 					<th>Dzien miesiaca</th>
 
 					{#each $shifts as shift}
-						<th>{Object.keys(shift)}</th>
+						<th>{shift}</th>
 					{/each}
 					<th />
 					{#each $month as date}
 						<tr class:day-off={!!date.isDayOff}>
 							<td>{date.day}</td>
 							{#each $shifts as shift}
-								<td class:day-off={!!date.isDayOff}>{Object.values(shift)}</td>
+								<td class:day-off={!!date.isDayOff}
+									>{(!!date.shifts && date.shifts[shift]) ||
+										(date.isDayOff && 'wolne') ||
+										'brak'}</td
+								>
 							{/each}
 						</tr>
 					{/each}
@@ -126,7 +137,7 @@
 			<ul>
 				{#each $shifts as shift}
 					<li>
-						{Object.keys(shift)}
+						{shift}
 						<button data-test-id={`remove_this-${shift}`} on:click={() => removeShift(shift)}
 							>usun</button
 						>
@@ -140,7 +151,7 @@
 					<li>
 						{person}
 						{#each $shifts as shift}
-							<button>{Object.keys(shift)}</button>
+							<button on:click={() => assignShiftSeries(shift, person)}>{shift}</button>
 						{/each}
 						<button data-test-id={`remove_this-${person}`} on:click={() => removePerson(person)}
 							>usun</button
