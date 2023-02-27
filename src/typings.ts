@@ -1,6 +1,6 @@
 export interface workday {
 	day?: string;
-	shifts?: Ishift[];
+	shifts?: Ishift;
 	isDayOff?: boolean;
 }
 
