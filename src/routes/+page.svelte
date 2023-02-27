@@ -112,7 +112,7 @@
 						<tr class:day-off={!!date.isDayOff}>
 							<td>{date.day}</td>
 							{#each $shifts as shift}
-								<td class:day-off={!!date.isDayOff}>"todo"</td>
+								<td class:day-off={!!date.isDayOff}>{Object.values(shift)}</td>
 							{/each}
 						</tr>
 					{/each}
@@ -139,6 +139,9 @@
 				{#each $people as person}
 					<li>
 						{person}
+						{#each $shifts as shift}
+							<button>{Object.keys(shift)}</button>
+						{/each}
 						<button data-test-id={`remove_this-${person}`} on:click={() => removePerson(person)}
 							>usun</button
 						>
