@@ -76,6 +76,21 @@
 		}
 		month.update((state) => (state = [...state, ...workdays]));
 	};
+
+	const dragstart = (event: DragEvent, name: string) => {
+		event.dataTransfer.effectAllowed = 'move';
+		event.dataTransfer.dropEffect = 'move';
+		const start = name;
+		event.dataTransfer.setData('text/plain', start);
+		console.log('TODO: IMPLEMENT');
+	};
+
+	const drop = (event: DragEvent, target: any) => {
+		event.dataTransfer.dropEffect = 'move';
+		// const start = event.dataTransfer.getData('text/plain');
+
+		console.log('TODO: IMPLEMENT');
+	};
 </script>
 
 <div class="grid-container">
@@ -122,7 +137,10 @@
 						<tr class:day-off={!!date.isDayOff}>
 							<td>{date.day}</td>
 							{#each $shifts as shift}
-								<td class:day-off={!!date.isDayOff}
+								<td
+									class:day-off={!!date.isDayOff}
+									on:dragover|preventDefault={() => false}
+									on:drop={(event) => drop(event, date.day)}
 									>{(!!date.shifts && date.shifts[shift]) ||
 										(date.isDayOff && 'wolne') ||
 										'brak'}</td
@@ -151,7 +169,7 @@
 			<h3>Osoby</h3>
 			<ul>
 				{#each $people as person}
-					<li draggable="true">
+					<li draggable="true" on:dragstart={(event) => dragstart(event, person)}>
 						{person}
 						{#each $shifts as shift}
 							<button on:click={() => assignShiftSeries(shift, person)}>{shift}</button>
