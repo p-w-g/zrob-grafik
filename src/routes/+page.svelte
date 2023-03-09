@@ -151,7 +151,7 @@
 			<h3>Osoby</h3>
 			<ul>
 				{#each $people as person}
-					<li>
+					<li draggable="true">
 						{person}
 						{#each $shifts as shift}
 							<button on:click={() => assignShiftSeries(shift, person)}>{shift}</button>
